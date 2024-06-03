@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Jogo Herói e Vilão</title>
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>Dashboard</h1>
+        <div class="personagens">
+            <div class="personagem">
+                <h2>Herói</h2>
+                <div>Vida: {{ heroiVida }}%</div>
+            </div>
+            <div class="personagem">
+                <h2>Vilão</h2>
+                <div>Vida: {{ vilaoVida }}%</div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                heroiVida: '',
+                vilaoVida: ''
+            },
+            created() {
+                this.heroiVida = localStorage.getItem('heroiVida') || '100';
+                this.vilaoVida = localStorage.getItem('vilaoVida') || '100';
+            }
+        });
+    </script>
+</body>
+</html>
