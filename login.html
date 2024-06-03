@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="login.css">
+</head>
+<body>
+  <div id="app">
+    <div class="login-container">
+      <h2>Página Inicial</h2>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" v-model="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" v-model="password" required>
+        </div>
+        <button type="submit">Entrar</button>
+        <div class="signup-link">
+          <span>Não tem uma conta?</span>
+          <a href="cadastro.html">Cadastre-se</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          email: '',
+          password: ''
+        }
+      },
+      methods: {
+        async login() {
+          try {
+            const response = await fetch('/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({ email: this.email, password: this.password })
+            });
+            const data = await response.json();
+            if (data.success) {
+              console.log('Login bem-sucedido. Bem-vindo, ' + data.user.name + '!');
+              window.location.href = 'dashboard.html';
+            } else {
+              console.log(data.message);
+            }
+          } catch (error) {
+            console.error('Erro ao fazer login:', error);
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
