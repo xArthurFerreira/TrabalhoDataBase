@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Batman vs Coringa</title>
+    <link rel="stylesheet" href="jogo.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <div class="personagem" >
+        <div class="barra-vida" :style="{width: heroi.vida + '%'}">Vida Herói</div>
+        <div class="sprite"><img src="./img/batman.png" alt="Batman"></div>
+        <h1>Batman</h1>
+        <div class="acoes">
+            <button @click="atacar(heroi, vilao)">Atacar</button>
+            <button @click="defender(heroi)">Defender</button>
+            <button @click="usarPocao(heroi)">Usar Poção</button>
+            <button @click="correr(heroi)">Correr</button>
+        </div>
+    </div>
+    <div class="personagem" >
+        <div class="barra-vida" :style="{width: vilao.vida + '%'}">Vida Vilão</div>
+        <div class="sprite"><img src="./img/coringa.png" alt="Coringa"></div>
+        <h1>Coringa</h1>
+        <div class="acoes">
+            <button @click="atacar(vilao, heroi)">Atacar</button>
+            <button @click="defender(vilao)">Defender</button>
+            <button @click="usarPocao(vilao)">Usar Poção</button>
+            <button @click="correr(vilao)">Correr</button>
+        </div>
+    </div>
+    <button @click="goToDashboard">Ir para o Dashboard</button>
+</div>
+
+<script>
+const heroi = {
+    nome: 'Batman',
+    vida: 100,
+    imagem: './img/batman.png'
+};
+
+const vilao = {
+    nome: 'Coringa',
+    vida: 100,
+    imagem: './img/coringa.png'
+};
+
+function atacar(atacante, alvo) {
+    const dano = Math.floor(Math.random() * 10) + 1; 
+    alvo.vida -= dano;
+    if (alvo.vida < 0) {
+        alvo.vida = 0; 
+        console.log(`${alvo.nome} foi derrotado!`);
+    }
+}
+
+function defender(defensor) {}
+
+function usarPocao(personagem) {}
+
+function correr(personagem) {}
+
+const app = Vue.createApp({
+    data() {
+        return {
+            heroi,
+            vilao
+        }
+    },
+    methods: {
+        atacar,
+        defender,
+        usarPocao,
+        correr,
+        goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+    }
+});
+
+app.mount('#app');
+</script>
+</body>
+</html>
